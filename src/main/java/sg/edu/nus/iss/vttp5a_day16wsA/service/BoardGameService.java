@@ -16,4 +16,8 @@ public class BoardGameService {
     public void loadGamesIntoRedis() throws FileNotFoundException {
         redisValueRepo.loadGamesIntoRedis();
     }
+
+    public String createBoardGame(String boardGameJson) {
+        return redisValueRepo.createBoardGame(boardGameJson);
+    }
 }

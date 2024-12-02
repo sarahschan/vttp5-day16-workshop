@@ -3,6 +3,7 @@ package sg.edu.nus.iss.vttp5a_day16wsA.repository;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.StringReader;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,11 +70,20 @@ public class RedisValueRepo {
 
 
     // create a board game function
-    public String createBoardGame(String id, String boardGameJson) {
+    public String createBoardGame(String boardGameJson) {
         
+        // parse the JSON string to extract the "gid"
+        JsonReader jReader = Json.createReader(new StringReader(boardGameJson));
+        JsonObject gameObject = jReader.readObject();
+
+        // extract the "gid" to create redis key
+        int id = gameObject.getInt("id");
         String gameKey = "boardgame:" + id;
+
+        // save JSON object into Redis
         template.opsForValue().set(gameKey, boardGameJson);
 
+        // build confirmation response
         JsonObject response = Json.createObjectBuilder()
                                 .add("insert_count", 1)
                                 .add("id", gameKey)
@@ -84,9 +94,7 @@ public class RedisValueRepo {
 
 
     // retrieve a board game function
-    public String retrieveBoardGame(String id) {
-
-        String gameKey = "boardgame:" + id;
+    public String retrieveBoardGame(String gameKey) {
 
         Optional<String> opt = Optional.ofNullable(
                                 template.opsForValue().get(gameKey));
@@ -96,7 +104,7 @@ public class RedisValueRepo {
             return boardGameJson;
 
         } else {
-            throw new BoardGameNotFoundException(id);
+            throw new BoardGameNotFoundException(gameKey);
         }
         
     }
