@@ -26,13 +26,17 @@ public class RedisConfig {
     @Value("${spring.data.redis.password}")
     private String redisPassword;
 
-    
+    @Value("${spring.data.redis.database:0}")   // Default to 0 if not set
+    private int redisDatabase;
+
+
     // slide 18
     @Bean
     public JedisConnectionFactory jedisConnectionFactory() {
         RedisStandaloneConfiguration rsc = new RedisStandaloneConfiguration();
         rsc.setHostName(redisHost);
         rsc.setPort(redisPort);
+        rsc.setDatabase(redisDatabase);
 
         if(redisUsername.trim().length() > 0) {
             rsc.setUsername(redisUsername);
