@@ -18,6 +18,7 @@ import jakarta.json.JsonObject;
 import jakarta.json.JsonReader;
 import jakarta.json.JsonValue;
 import sg.edu.nus.iss.vttp5a_day16wsA.constant.Constants;
+import sg.edu.nus.iss.vttp5a_day16wsA.exceptions.BadRequestException;
 import sg.edu.nus.iss.vttp5a_day16wsA.exceptions.BoardGameNotFoundException;
 
 @Repository
@@ -111,15 +112,12 @@ public class RedisValueRepo {
 
 
     // update a board game function
-    public String updateBoardGame(String id, String boardGameJson, Boolean upsert){
+    public String updateBoardGame(String gameKey, String boardGameJson, Boolean upsert){
     
-        String gameKey = "boardgame:" + id;
-
-        // Check if game exists
         String existingGame = template.opsForValue().get(gameKey);
 
         if (existingGame == null) {     // if game does not exist
-            if (upsert) {   // if optional upsert = true
+            if (upsert) {               // if optional upsert = true
                 template.opsForValue().set(gameKey, boardGameJson);
                 JsonObject response = Json.createObjectBuilder()
                                         .add("insert_count", 1)
@@ -128,7 +126,7 @@ public class RedisValueRepo {
                 return response.toString();
 
             } else {        // if game does not exist and upsert = false
-                throw new BoardGameNotFoundException(id);
+                throw new BadRequestException(gameKey);
             }
         }
 

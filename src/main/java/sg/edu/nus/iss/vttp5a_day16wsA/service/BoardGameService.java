@@ -24,4 +24,8 @@ public class BoardGameService {
     public String retrieveBoardGame(String gameKey) {
         return redisValueRepo.retrieveBoardGame(gameKey);
     }
+
+    public String updateBoardGame(String gameKey, String boardGameJson, Boolean upsert) {
+        return redisValueRepo.updateBoardGame(gameKey, boardGameJson, upsert);
+    }
 }

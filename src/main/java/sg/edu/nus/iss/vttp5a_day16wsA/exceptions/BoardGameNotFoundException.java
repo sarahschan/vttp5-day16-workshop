@@ -6,8 +6,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(HttpStatus.NOT_FOUND)   // Automatically returns 404 HTTP status
 public class BoardGameNotFoundException extends RuntimeException{
 
-    // Constructor that accepts the board game ID to be displayed in the error message
-    public BoardGameNotFoundException(String id) {
-        super ("Board game with ID" + id + "not found");
+    // Constructor that accepts the gameKey to be displayed in the error message
+    public BoardGameNotFoundException(String gameKey) {
+        super ("Board game with ID" + gameKey + " not found");
     }
+    
 }

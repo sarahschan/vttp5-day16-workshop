@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import sg.edu.nus.iss.vttp5a_day16wsA.service.BoardGameService;
@@ -64,10 +65,13 @@ public class BoardGameController {
 
 
     // task 3 - write a REST endpoint that will update a document (key)
-    @PutMapping("/{gameID}")
-    public ResponseEntity<String> updateBoardGame(@PathVariable String gameID) {
+    // /api/boardgame/{gameKey}?upsert=true
+    @PutMapping("/{gameKey}")
+    public ResponseEntity<String> updateBoardGame(@PathVariable String gameKey, @RequestBody String boardGameJson, @RequestParam(defaultValue = "false") Boolean upsert) {
 
-        String response = boardGameService.updateBoardGame(gameID);
+        String response = boardGameService.updateBoardGame(gameKey, boardGameJson, upsert);
+
+        return ResponseEntity.ok().body(response);
         
     }
 }
