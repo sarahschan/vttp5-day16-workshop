@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class BadRequestException extends RuntimeException {
     
     public BadRequestException(String gameKey) {
-        super("BAD REQUEST - Board game with ID " + gameKey + " not found and (optional) upsert Boolean set to FALSE");
+        super("BAD REQUEST - Board game with redis key " + gameKey + " not found and (optional) upsert Boolean set to FALSE");
     }
 }

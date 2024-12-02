@@ -8,7 +8,7 @@ public class BoardGameNotFoundException extends RuntimeException{
 
     // Constructor that accepts the gameKey to be displayed in the error message
     public BoardGameNotFoundException(String gameKey) {
-        super ("Board game with ID" + gameKey + " not found");
+        super ("Board game with redis key " + gameKey + " not found");
     }
     
 }
