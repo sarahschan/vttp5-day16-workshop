@@ -1,4 +1,4 @@
-# DAY 16 WORKSHOP - 
+# DAY 16 WORKSHOP - Working with Redis and JSON objects
 
 - game.json dataset is located in src/main/resources/data
 - Program has been configured to use redis database 1
