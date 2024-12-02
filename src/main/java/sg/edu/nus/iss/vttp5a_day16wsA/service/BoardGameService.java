@@ -20,4 +20,8 @@ public class BoardGameService {
     public String createBoardGame(String boardGameJson) {
         return redisValueRepo.createBoardGame(boardGameJson);
     }
+
+    public String retrieveBoardGame(String gameKey) {
+        return redisValueRepo.retrieveBoardGame(gameKey);
+    }
 }

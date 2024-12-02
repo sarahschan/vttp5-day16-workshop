@@ -4,9 +4,11 @@ import java.io.FileNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -47,5 +49,25 @@ public class BoardGameController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to create board game in redis");
         }
 
+    }
+
+
+    // task 2 - write a REST endpoint that will retrieve a given board game
+    @GetMapping("/{gameKey}")
+    public ResponseEntity<String> getBoardGame(@PathVariable String gameKey) {
+        
+        String response = boardGameService.retrieveBoardGame(gameKey);
+
+        return ResponseEntity.ok().body(response);
+
+    }
+
+
+    // task 3 - write a REST endpoint that will update a document (key)
+    @PutMapping("/{gameID}")
+    public ResponseEntity<String> updateBoardGame(@PathVariable String gameID) {
+
+        String response = boardGameService.updateBoardGame(gameID);
+        
     }
 }
