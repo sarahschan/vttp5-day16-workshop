@@ -1,4 +1,4 @@
-# DAY 16 WORKSHOP - Working with Redis and JSON objects
+# DAY 16 WORKSHOP - Working with Redis and JSON Objects
 
 - game.json dataset is located in src/main/resources/data
 - Program has been configured to use redis database 1
@@ -53,6 +53,14 @@
 - If the gameKey does not exist,
     - If upsert=false, program will return a 400 BAD REQUEST
     - If upsert=true, program will attempt to update the data and return a 200 OK
+
+
+### Bonus: Retrieve all games from redis database
+- On Postman:
+    - GET request: http://localhost:8080/api/boardgame/all/json
+        - Returns games as a Map of their gameKeys and game as a JsonObject
+    - GET request: http://localhost:8080/api/boardgame/all/string
+        - Returns games as a Map of their gameKeys and game as a plain String
 
 <br>
 

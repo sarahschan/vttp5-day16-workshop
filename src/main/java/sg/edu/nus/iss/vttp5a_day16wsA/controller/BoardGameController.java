@@ -1,6 +1,7 @@
 package sg.edu.nus.iss.vttp5a_day16wsA.controller;
 
 import java.io.FileNotFoundException;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.json.JsonObject;
 import sg.edu.nus.iss.vttp5a_day16wsA.service.BoardGameService;
 
 @RestController
@@ -74,4 +76,26 @@ public class BoardGameController {
         return ResponseEntity.ok().body(response);
         
     }
+
+
+    // bonus - REST endpoint that shows all board games in the redis database
+    @GetMapping("/all/string")
+    public ResponseEntity<Map<String,String>> getAllBoardGamesString() {
+        
+        Map<String, String> allBoardGames = boardGameService.getAllBoardGamesString();
+        return ResponseEntity.ok().body(allBoardGames);
+
+    }
+
+
+    @GetMapping("/all/json")
+    public ResponseEntity<Map<String, JsonObject>> getAllBoardGamesJsonMap() {
+        
+        // retrieve all board games using the service
+        Map<String, JsonObject> allBoardGames = boardGameService.getAllBoardGamesJsonMap();
+
+        return ResponseEntity.ok().body(allBoardGames);        
+    }
+
+
 }

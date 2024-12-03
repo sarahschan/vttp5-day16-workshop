@@ -4,7 +4,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.StringReader;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -140,4 +143,44 @@ public class RedisValueRepo {
 
     }
     
+    
+    // get all keys (board games) function (Simple String)
+    public Map<String, String> getAllBoardGamesString() {
+        // get all keys matching the pattern "boardgame:*"
+        Set<String> keys = template.keys("boardgame:*");
+
+        // Create a new map to store the board games and their values
+        Map<String, String> allBoardGames = new HashMap<>();
+
+        for (String key : keys) {
+            String value = template.opsForValue().get(key);
+            allBoardGames.put(key, value);
+        }
+
+        return allBoardGames;
+
+    }
+
+    // get all keys (board games) function (Map of JsonObjects)
+    public Map<String, JsonObject> getAllBoardGamesJsonMap() {
+
+        // Get all keys matching the pattern boardgame:*
+        Set<String> gameKeys = template.keys("boardgame:*");
+
+        // Create a new map to store gameKeys and their parsed JSON values
+        Map<String, JsonObject> allBoardGames = new HashMap<>();
+
+        for (String key : gameKeys) {
+            
+            String boardGameString = template.opsForValue().get(key);
+
+            JsonReader jReader = Json.createReader(new StringReader(boardGameString));
+            JsonObject boardGameObject = jReader.readObject();
+
+            allBoardGames.put(key, boardGameObject);
+        }
+
+        return allBoardGames;
+    }
+
 }
