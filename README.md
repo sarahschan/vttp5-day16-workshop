@@ -22,12 +22,19 @@
     - Send the game as a JSON object with the body in this format:
 
         {
+
         "id": 100,
+
         "name": "Catan",
+
         "year": 1995,
+
         "ranking": 5,
+
         "rating": 500000,
+
         "url": "https://www.boardgamegeek.com/boardgame/100/catan"
+        
         }
     
     - Note that id, year, ranking, and rating are Integers while id and url are Strings
